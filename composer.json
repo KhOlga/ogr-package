@@ -1,0 +1,32 @@
+{
+    "name": "okh/ogr-package",
+    "description": "Gravatar API integration package",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Okh\\OgrPackage\\": "src"
+        }
+    },
+    "authors": [
+        {
+            "name": "Olha Kharabet",
+            "email": "kharabet.olga@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "guzzlehttp/guzzle": "^7.3",
+        "illuminate/contracts": "^8.0"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Okh\\OgrPackage\\OgrPackageServiceProvider"
+            ]
+        }
+    }
+}
