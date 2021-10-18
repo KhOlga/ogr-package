@@ -1,18 +1,26 @@
 <?php
 
+use Okh\OgrPackage\OgrPackage;
+
 trait HasGravatar
 {
-	public function imageRequests(string $email)
+	public function imageRequests(string $email, int $size, string $default)
 	{
 		$hash = $this->makeEmailHash($email);
+		$ogrPackage = app(OgrPackage::class);
+		$link = $ogrPackage->getUrl() . 'avatar/' . $hash . '?d=' . urlencode($default) . "&s=" . $size;
 
-		//TODO: connect to makeEmailHashGravatarAPI, get the data, return response json
+		return response()->json($link);
 	}
 
-	public function profileRequest(string $email)
+	public function profileDataRequest(string $email)
 	{
 		$hash = $this->makeEmailHash($email);
-		//TODO: connect to makeEmailHashGravatarAPI, get the data, return response json
+		$ogrPackage = app(OgrPackage::class);
+		$link = $ogrPackage->getUrl() . $hash . '.json';
+		$data = $ogrPackage->getJsonData($link);
+
+		return response()->json($data);
 	}
 
 	protected function makeEmailHash(string $data)

@@ -4,6 +4,8 @@ namespace Okh\OgrPackage;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\InvalidArgumentException;
+use GuzzleHttp\Exception\RequestException;
 
 class OgrPackage
 {
@@ -26,8 +28,8 @@ class OgrPackage
 
 	private function validateConfig()
 	{
-		if (!isset($this->config['host']) || !isset($this->config['key'])) {
-			throw new InvalidArgumentException('Config for [Gravatar API service] is not valid.');
+		if (!isset($this->config['host'])) {
+			throw new InvalidArgumentException('Config is not valid.');
 		}
 	}
 
@@ -35,7 +37,6 @@ class OgrPackage
 	{
 		$this->client = new Client([
 			'base_uri' => $this->config['host'],
-			'token' => $this->config['key'],
 			'headers' => [
 				'Content-Type' => 'application/json'
 			]
@@ -52,7 +53,7 @@ class OgrPackage
 	 * @return mixed
 	 * @throws GuzzleException
 	 */
-	public function getIPs($link)
+	public function getJsonData($link)
 	{
 		return $this->send('GET', $link);
 	}
@@ -77,5 +78,33 @@ class OgrPackage
 				$this->send($method, $link);
 			}
 		}
+	}
+
+	/**
+	 * @param array $inputData
+	 * @return array
+	 */
+	public function parseData(array $inputData)
+	{
+		$data = [];
+
+		if (!empty($inputData['entry'])) {
+			if (!empty($inputData['entry'][0])) {
+				$data['hash'] = $inputData['entry'][0]['hash'];
+				$data['request_hash'] = $inputData['entry'][0]['requestHash'];
+				$data['profile_url'] = $inputData['entry'][0]['profileUrl'];
+				$data['preferred_username'] = $inputData['entry'][0]['preferredUsername'];
+				$data['thumbnail_url'] = $inputData['entry'][0]['thumbnailUrl'];
+				$data['name'] = $inputData['entry'][0]['name'];
+				$data['displayed_name'] = $inputData['entry'][0]['displayName'];
+				$data['urls'] = $inputData['entry'][0]['urls'];
+
+				if(!empty($inputData['entry'][0]['photos'])) {
+					$data['photos_value'] = $inputData['entry'][0]['photos'][0]['value'];
+					$data['photos_type'] = $inputData['entry'][0]['photos'][0]['type'];
+				}
+			}
+		}
+		return $data;
 	}
 }

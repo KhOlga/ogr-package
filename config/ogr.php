@@ -12,7 +12,6 @@ return [
 	*/
 
 	'host' => env('GRAVATAR_API_HOST'),
-	'key' => env('GRAVATAR_API_KEY', ''),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -37,9 +36,8 @@ return [
 	| You may set yours model's name if it is necessary. For example
 	|
 	*/
-
 	'models' => [
-
+		'user' => App\Models\User::class,
 		'metric' => Okh\OgrPackage\Models\Metric::class,
 	],
 
@@ -53,7 +51,6 @@ return [
     | default value,  but you may easily change it to any table you like.
 	|
 	*/
-
 	'table_names' => [
 		'metrics' => 'metrics',
 		'users_metrics' => 'users_metrics'
@@ -68,7 +65,6 @@ return [
 	| `user_id`.
 	|
 	*/
-
 	'column_name' => [
 		'user_id' => 'user_id',
 	],
