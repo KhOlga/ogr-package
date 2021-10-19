@@ -9,16 +9,11 @@ trait HasStored
 	public function storeMetric(array $data, $userId)
 	{
 		$data['user_id'] = $userId;
-
+		$data['avatar_path'] = '';
 		$metric = Metric::create($data);
 
 		if ($metric->save() === false) {
-			return redirect()->back()->with(
-				[
-					'message' => 'Metrics couldn\'t be stored',
-					'type' => 'danger'
-				]
-			);
+			return 417;
 		}
 	}
 

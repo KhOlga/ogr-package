@@ -95,9 +95,16 @@ class OgrPackage
 				$data['profile_url'] = $inputData['entry'][0]['profileUrl'];
 				$data['preferred_username'] = $inputData['entry'][0]['preferredUsername'];
 				$data['thumbnail_url'] = $inputData['entry'][0]['thumbnailUrl'];
-				$data['name'] = $inputData['entry'][0]['name'];
+
+				if(empty($inputData['entry'][0]['name'])) {
+					$data['name'] = '';
+				}
+
 				$data['displayed_name'] = $inputData['entry'][0]['displayName'];
-				$data['urls'] = $inputData['entry'][0]['urls'];
+
+				if(empty($inputData['entry'][0]['urls'])) {
+					$data['urls'] = '';
+				}
 
 				if(!empty($inputData['entry'][0]['photos'])) {
 					$data['photos_value'] = $inputData['entry'][0]['photos'][0]['value'];

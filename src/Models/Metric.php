@@ -19,6 +19,7 @@ class Metric extends Model
 		'displayed_name',
 		'urls',
 		'avatar_path',
+		'user_id'
 	];
 
 	public function user(): HasOne

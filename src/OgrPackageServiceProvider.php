@@ -16,6 +16,10 @@ class OgrPackageServiceProvider extends ServiceProvider
 		$this->publishes([
 			__DIR__.'/../config/ogr.php' => config_path('ogr.php')
 		], 'ogr-config');
+
+		$this->publishes([
+			__DIR__.'/../database/migrations/' => database_path('migrations')
+		], 'ogr-migrations');
 	}
 
 	public function register()

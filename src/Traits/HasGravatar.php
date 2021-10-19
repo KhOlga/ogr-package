@@ -8,9 +8,8 @@ trait HasGravatar
 	{
 		$hash = $this->makeEmailHash($email);
 		$ogrPackage = app(OgrPackage::class);
-		$link = $ogrPackage->getUrl() . 'avatar/' . $hash . '?d=' . urlencode($default) . "&s=" . $size;
 
-		return response()->json($link);
+		return $ogrPackage->getUrl() . 'avatar/' . $hash . '?d=' . urlencode($default) . "&s=" . $size;
 	}
 
 	public function profileDataRequest(string $email)
@@ -18,9 +17,8 @@ trait HasGravatar
 		$hash = $this->makeEmailHash($email);
 		$ogrPackage = app(OgrPackage::class);
 		$link = $ogrPackage->getUrl() . $hash . '.json';
-		$data = $ogrPackage->getJsonData($link);
 
-		return response()->json($data);
+		return  $ogrPackage->parseData($ogrPackage->getJsonData($link));
 	}
 
 	protected function makeEmailHash(string $data)
