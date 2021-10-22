@@ -21,8 +21,13 @@ trait HasStored
 	public function storeImage(string $emailHash)
 	{
 		$ogrPackage = app(OgrPackage::class);
+
+		if (is_dir($dir = storage_path('app/' . config('ogr.path'))) === false) {
+			mkdir($dir);
+		}
+
 		$link = $ogrPackage->getUrl() . 'avatar/' . $emailHash . '.jpg';
-		$file = storage_path('app/' . time() . '.jpg');
+		$file = $dir . time() . '.jpg';
 		file_put_contents($file, fopen($link, 'r'));
 
 		return 201;

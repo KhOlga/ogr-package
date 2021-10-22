@@ -25,7 +25,7 @@ return [
 	|
 	*/
 
-	'path' => env('OGR_PACKAGE_FILE_PATH', 'public/ogr_images'),
+	'path' => env('OGR_PACKAGE_FILE_PATH', 'ogr_images/'),
 	'file' => env('OGR_PACKAGE_FILE_NAME', 'ogr'),
 
 	/*
