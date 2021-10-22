@@ -3,6 +3,7 @@
 namespace Okh\OgrPackage\Traits;
 
 use Okh\OgrPackage\Models\Metric;
+use Okh\OgrPackage\OgrPackage;
 
 trait HasStored
 {
@@ -17,8 +18,13 @@ trait HasStored
 		}
 	}
 
-	public function storeImage()
+	public function storeImage(string $emailHash)
 	{
-		//TODO: add store images logic, dir and file name get from config/ogr.php
+		$ogrPackage = app(OgrPackage::class);
+		$link = $ogrPackage->getUrl() . 'avatar/' . $emailHash . '.jpg';
+		$file = storage_path('app/' . time() . '.jpg');
+		file_put_contents($file, fopen($link, 'r'));
+
+		return 201;
 	}
 }
